@@ -1,10 +1,23 @@
 
 // เรียกใช้
 
+require('dotenv').config()
+const mongoose = require('mongoose')
 const express = require('express') 
 const path = require('path')
 const router = require('./router/routes')
 const app = express()   // เก็บ express ไว้ในตัวแปร app
+
+mongoose.connect(process.env.DATABASE_URL,{
+    useNewUrlParser : true,
+    useUnifiedTopology : true
+  })
+  const db = mongoose.connection
+  db.on('error', (error) => console.error(error))
+  db.once('open',() => console.log('Connected to Database'))
+
+
+
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.json())
